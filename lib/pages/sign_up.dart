@@ -58,7 +58,6 @@ class _SignUpState extends State<SignUp> {
                           nameController.text,
                           nimController.text,
                           phoneNumberController.text);
-                      Navigator.pop(context);
                     },
                     child: Text('Daftar'),
                     style: ElevatedButton.styleFrom(
