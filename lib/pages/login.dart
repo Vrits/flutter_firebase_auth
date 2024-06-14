@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
                   ),
                   Text(
-                    "di aplikasi saya (Nama)",
+                    "di aplikasi saya flutter_firebase_auth",
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(
