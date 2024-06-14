@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,11 @@ class _SignUpState extends State<SignUp> {
                       print(
                           '${emailController.text}, ${passwordController.text}');
                       signUpEmailPassword(
-                          emailController.text, passwordController.text);
+                          emailController.text,
+                          passwordController.text,
+                          nameController.text,
+                          nimController.text,
+                          phoneNumberController.text);
                       Navigator.pop(context);
                     },
                     child: Text('Daftar'),
@@ -115,12 +120,28 @@ class _SignUpState extends State<SignUp> {
   }
 }
 
-Future<User?> signUpEmailPassword(String email, String password) async {
+Future<User?> signUpEmailPassword(
+  String email,
+  String password,
+  String name,
+  String nim,
+  String phoneNumber,
+) async {
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
 
   try {
     UserCredential credential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
+    print({credential.user?.uid});
+
+    db.collection('users').doc(credential.user?.uid).set({
+      'name': name,
+      'nim': nim,
+      'phoneNumber': phoneNumber,
+      'email': email,
+    });
+
     return credential.user;
   } on FirebaseAuthException catch (e) {
     if (e.code == 'email-already-on-use') {
