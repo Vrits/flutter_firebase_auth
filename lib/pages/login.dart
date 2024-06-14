@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_auth/pages/home.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 
@@ -53,7 +54,12 @@ class _LoginState extends State<Login> {
                           emailController.text, passwordController.text);
 
                       if (user != null) {
-                        Navigator.pushNamed(context, '/home');
+                        print(user.uid);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Home(id: user.uid)));
+                        // Navigator.pushNamed(context, '/home');
                       }
                     },
                     child: Text('Masuk'),

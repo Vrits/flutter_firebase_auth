@@ -17,7 +17,7 @@ Future<void> main() async {
     initialRoute: '/',
     routes: {
       '/': (context) => const Login(),
-      '/home': (context) => const Home(),
+      // '/home': (context) => const Home(),
       '/signup': (context) => const SignUp(),
     },
   ));

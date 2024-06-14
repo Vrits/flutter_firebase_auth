@@ -52,8 +52,6 @@ class _SignUpState extends State<SignUp> {
                       TextInputType.text),
                   ElevatedButton(
                     onPressed: () {
-                      print(
-                          '${emailController.text}, ${passwordController.text}');
                       signUpEmailPassword(
                           emailController.text,
                           passwordController.text,
@@ -133,18 +131,16 @@ Future<User?> signUpEmailPassword(
   try {
     UserCredential credential = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
-    print({credential.user?.uid});
-
     db.collection('users').doc(credential.user?.uid).set({
       'name': name,
       'nim': nim,
       'phoneNumber': phoneNumber,
       'email': email,
     });
-
+    Fluttertoast.showToast(msg: 'Berhasil membuat akun');
     return credential.user;
   } on FirebaseAuthException catch (e) {
-    if (e.code == 'email-already-on-use') {
+    if (e.code == 'email-already-in-use') {
       Fluttertoast.showToast(msg: 'Email sudah digunakan');
     } else {
       Fluttertoast.showToast(msg: 'Telah terjadi kesalahan : ${e.code}');
